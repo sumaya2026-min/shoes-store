@@ -1,0 +1,128 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+  }
+  .analytics-card,
+  .analytics-panel {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  }
+  .analytics-card h2,
+  .analytics-panel h2 {
+    margin-top: 0;
+  }
+  .analytics-card strong {
+    display: block;
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+  .analytics-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+  }
+  .analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .analytics-table th,
+  .analytics-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+  }
+  .analytics-link {
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+  @media (max-width: 900px) {
+    .analytics-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <a class="analytics-link" href="{% url 'admin:index' %}">Back to admin</a>
+
+  <div class="analytics-grid">
+    <section class="analytics-card">
+      <h2>Total Sales</h2>
+      <strong>${{ analytics.total_sales }}</strong>
+    </section>
+    <section class="analytics-card">
+      <h2>Number of Orders</h2>
+      <strong>{{ analytics.number_of_orders }}</strong>
+    </section>
+    <section class="analytics-card">
+      <h2>Top Products</h2>
+      <strong>{{ analytics.top_selling_products|length }}</strong>
+    </section>
+  </div>
+
+  <div class="analytics-layout">
+    <section class="analytics-panel">
+      <h2>Revenue Over Time</h2>
+      <table class="analytics-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Revenue</th>
+            <th>Orders</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in analytics.revenue_over_time %}
+          <tr>
+            <td>{{ item.date }}</td>
+            <td>${{ item.revenue }}</td>
+            <td>{{ item.orders }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3">No revenue data yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="analytics-panel">
+      <h2>Top-Selling Products</h2>
+      <table class="analytics-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity Sold</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in analytics.top_selling_products %}
+          <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity_sold }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2">No product sales yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+{{ analytics_json|json_script:"analytics-data" }}
+{% endblock %}

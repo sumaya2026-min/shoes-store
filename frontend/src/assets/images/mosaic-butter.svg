@@ -1,0 +1,15 @@
+<svg width="700" height="520" viewBox="0 0 700 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="520" rx="36" fill="url(#bg)"/>
+  <path d="M152 330C208 252 306 203 414 202C501 201 578 232 641 303V520H77V405C99 383 124 358 152 330Z" fill="url(#shoe)"/>
+  <defs>
+    <linearGradient id="bg" x1="46" y1="31" x2="612" y2="482" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D86D"/>
+      <stop offset="0.58" stop-color="#F8ECB0"/>
+      <stop offset="1" stop-color="#FFF8D9"/>
+    </linearGradient>
+    <linearGradient id="shoe" x1="145" y1="229" x2="591" y2="479" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D3A43E"/>
+      <stop offset="1" stop-color="#FCECB2"/>
+    </linearGradient>
+  </defs>
+</svg>
